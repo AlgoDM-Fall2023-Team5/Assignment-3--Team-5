@@ -39,7 +39,7 @@ import matplotlib.cm as cmx
 # We load product images and corresponding category labels, compute basic statistics, and visualize image examples. 
 
 # %%
-base_path = '../../tensor-house-data-large-unpacked/grigorev-clothing'
+base_path = 'D:\Projects\ADM Assg 3\Assignment-3--Team-5\clothing-dataset-master'
 df = pd.read_csv(base_path + '/images.csv')
 df = df[df['label'].isin(['Shoes', 'Dress', 'Longsleeve', 'T-Shirt', 'Hat'])]
 

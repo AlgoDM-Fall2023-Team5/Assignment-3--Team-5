@@ -2,45 +2,57 @@ import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+from sklearn.preprocessing import MultiLabelBinarizer
+import io
+import cv2
 
 # Load the model
 model = tf.keras.models.load_model("visual_search_similarity.keras")
+label_set = ['Hat', 'Shoes', 'T-Shirt', 'Longsleeve', 'Dress']
 
-# Define the target image size expected by the model
-target_image_size = (10,10)
+def decode_labels(y, mlb):
+  labels = np.array(mlb.inverse_transform(np.atleast_2d(y)))[:, 0]
+  return labels
+
+def decode_label_prob(y, classes):
+  labels = []
+  for i, c in enumerate(classes):
+    labels.append(f'{c}: {y[i]:.2%}')
+  return labels
 
 st.title("Visual Similarity Finder")
 
 uploaded_image = st.file_uploader("Upload an Image", type=['jpg', 'png', 'jpeg'])
+st.write(uploaded_image)
 
 if uploaded_image is not None:
-    try:
-        # Read the uploaded image using PIL
-        image = Image.open(uploaded_image)
+  try:
+    # Convert the PIL image object to a bytes object
+    # image_bytes = io.BytesIO(uploaded_image.read())
 
-        # Resize the image to match the model's expected input size
-        image = image.resize(target_image_size)
+    # Read the image using tf.keras.preprocessing.image.load_img()
+    # image = tf.keras.preprocessing.image.load_img(uploaded_image, color_mode='rgb', target_size=(224, 224))
 
-        # Convert the image to a NumPy array
-        image = image.convert('L')
-        image = np.array(image)
-        
-        # Normalize the pixel values to the [0, 1] range
-        image = image.astype('float32') / 255.0
+    img = cv2.resize(uploaded_image,(224,224))     # resize image to match model's expected sizing
+    image = img.reshape(1,224,224,3) # return the image with shaping that TF wants.
 
-        # Add a batch dimension to the image
-        image = np.expand_dims(image, axis=0)
+    # Convert the image to a NumPy array
+    image = np.array(image)
 
-        # Make predictions with the model
-        predictions = model.predict(image)
+    # Preprocess the image
+    x = image.astype('float32')
 
-        #class probabilites
-        predicted_class = np.argmax(predictions, axis=1)
+    # Make a prediction
+    mlb = MultiLabelBinarizer()
+    mlb.fit([label_set])
 
-        # Display the class and corresponding probability
-        st.write(f'Predicted Class: {predicted_class[0]}')
-        st.write(f'Class Probabilities: {predictions[0]}')
+    class_probs = model.predict(x)[0]
 
-        st.write(predictions)
-    except Exception as e:
-        st.error(f'Failed to load or process the image: {str(e)}')
+    # Decode the prediction results
+    labels = decode_label_prob(class_probs, mlb.classes_)
+
+    # Display the results
+    st.write('\n'.join(labels))
+
+  except Exception as e:
+    st.error(f'Failed to load or process the image: {str(e)}')
