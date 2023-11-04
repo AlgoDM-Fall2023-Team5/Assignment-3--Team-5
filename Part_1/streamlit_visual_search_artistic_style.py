@@ -12,7 +12,7 @@ import tensorflow as tf
 import glob
 from PIL import Image
 
-
+st.header("Visual Search Aristic Style")
 # D:\Projects\ADM Assg 3\Assignment-3--Team-5\Part_1\streamlit_visual_search_artistic_style.py
 model = tf.keras.models.load_model("visual_search_similarity.keras")
 
