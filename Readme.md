@@ -2,10 +2,10 @@
 
 ## Quick Links:🔎
 1. [Codelabs](https://codelabs-preview.appspot.com/?file_id=1wqKhtmHWH24mrivcSj_VH1B2udrAi4xTzndSzxf_gQ8#0)🔗
-2. [Visual Search Artistic Style]()🔗
-3. [Visual Search Similarity]()🔗
-4. [Visual Search VAE]()🔗
-5. [Contribution Report:]()🔗
+2. [Visual Search Artistic Style](team5admartistic.streamlit.app)🔗
+3. [Visual Search Similarity](team5admsimilarity.streamlit.app)🔗
+4. [Visual Search VAE](team5admvae.streamlit.app)🔗
+5. [Contribution Report:](https://github.com/AlgoDM-Fall2023-Team5/Assignment-3--Team-5/blob/Main/Part_1/Contribution%20Report.pdf)🔗
 6. [Video Recording:]()🔗
 
 
@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 * Visual Search Artistic Style: [streamlit_visual_search_artistic_style.py]
 * Visual Search Similarity: [streamlit_visual_similarity_search.py]
-* Visual Search VAE :  []
+* Visual Search VAE :  [streamlit_vae.py]
    
 
    ```
