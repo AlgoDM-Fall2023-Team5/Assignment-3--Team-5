@@ -41,18 +41,7 @@ def embedding_plot(X, images, thumbnail_sparsity = 0.005, thumbnail_size = 0.3):
 
     plt.grid(True)
 
-image_paths = glob.glob('search/images-by-style/*.jpg')
-# print(f'Found [{len(image_paths)}] images')
-images = {}
-for image_path in image_paths:
-    image = cv2.imread(image_path, 3)
-    b,g,r = cv2.split(image) # get b, g, r
-    image = cv2.merge([r,g,b]) # switch it to r, g, b
-    image = cv2.resize(image, (200, 200))
-    images[ntpath.basename(image_path)] = image 
 
-tsne = manifold.TSNE(n_components=2, init='pca', perplexity=10, random_state=0)
-X_tsne = tsne.fit_transform( np.array(list(image_style_embeddings.values())) )
 # embedding_plot(X_tsne, images=list(images.values()))
 
 # # Save the figure as an image
@@ -78,6 +67,19 @@ def search_by_style(image_style_embeddings, images, reference_image, max_results
 
     plt.show()
     
+
+image_paths = glob.glob('search/images-by-style/*.jpg')
+# print(f'Found [{len(image_paths)}] images')
+images = {}
+for image_path in image_paths:
+    image = cv2.imread(image_path, 3)
+    b,g,r = cv2.split(image) # get b, g, r
+    image = cv2.merge([r,g,b]) # switch it to r, g, b
+    image = cv2.resize(image, (200, 200))
+    images[ntpath.basename(image_path)] = image 
+
+tsne = manifold.TSNE(n_components=2, init='pca', perplexity=10, random_state=0)
+X_tsne = tsne.fit_transform( np.array(list(image_style_embeddings.values())) )
 
 # images mostly match the reference style, although not perfectly
 #image = Image.open('Part_1/Arn-Van-Gogh-Secondary-1.jpg')
