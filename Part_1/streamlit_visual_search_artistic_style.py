@@ -41,7 +41,7 @@ def embedding_plot(X, images, thumbnail_sparsity = 0.005, thumbnail_size = 0.3):
 
     plt.grid(True)
 
-image_paths = glob.glob('C:/Users/shiri/Documents/Assg3ADM/Assignment-3--Team-5/Part_1/search/images-by-style/*.jpg')
+image_paths = glob.glob('search/images-by-style/*.jpg')
 # print(f'Found [{len(image_paths)}] images')
 images = {}
 for image_path in image_paths:
@@ -87,21 +87,27 @@ def search_by_style(image_style_embeddings, images, reference_image, max_results
 # st.image('style_plot.png')
 # images mostly match the reference style, although not perfectly
 uploaded_image = st.file_uploader("Upload an Image", type=['jpg', 'png', 'jpeg'])
-st.write(uploaded_image)
+# st.write(uploaded_image)
 
 if uploaded_image is not None:
     try:
+        st.write(":green[Image Uploaded Successfully]")
+        st.sidebar.write(":blue[Uploaded Image:]")
+        st.sidebar.image(uploaded_image, width=300)
         name = uploaded_image.name
         search_by_style(image_style_embeddings, images, name)
         plt.savefig('search_by_style.png')
+        st.header("Matching Images:")
         st.image('search_by_style.png')
 
         embedding_plot(X_tsne, images=list(images.values()))
 
         # Save the figure as an image
+        
         plt.savefig('embedding_plot.png')
 
         # Pass the saved image to the st.image() function
+        st.header("2D Embedding Plot:")
         st.image('embedding_plot.png')
 
     except Exception as e:
