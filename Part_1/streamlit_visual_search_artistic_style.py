@@ -96,7 +96,7 @@ if uploaded_image is not None:
         st.sidebar.image(uploaded_image, width=300)
         name = uploaded_image.name
         search_by_style(image_style_embeddings, images, name)
-        plt.savefig('search_by_style.png')
+        #plt.savefig('search_by_style.png')
         st.header("Matching Images:")
         st.image('search_by_style.png')
 
@@ -104,7 +104,7 @@ if uploaded_image is not None:
 
         # Save the figure as an image
         
-        plt.savefig('embedding_plot.png')
+        #plt.savefig('embedding_plot.png')
 
         # Pass the saved image to the st.image() function
         st.header("2D Embedding Plot:")
