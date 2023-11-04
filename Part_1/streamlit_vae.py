@@ -177,7 +177,7 @@ def get_all_embeddings(data, vae):
 
 vae = VAE(enc=encoder, dec=decoder, optimizer = optimizer)
 vae.build((None, *DIMS))
-vae.load_weights('vae_model.h5')
+vae.load_weights('Part_1/vs_artistic.h5')
 
 all_embeddings = get_all_embeddings(train_images, vae)
 
