@@ -37,9 +37,9 @@ pip install -r requirements.txt
    ```
    5. Run the app
 
-Visual Search Artistic Style: streamlit_visual_search_artistic_style.py
-Visual Search Similarity: streamlit_visual_similarity_search.py
-Visual Search VAE :  
+* Visual Search Artistic Style: [streamlit_visual_search_artistic_style.py]
+* Visual Search Similarity: [streamlit_visual_similarity_search.py]
+* Visual Search VAE :  []
    
 
    ```
