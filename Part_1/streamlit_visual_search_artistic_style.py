@@ -10,6 +10,8 @@ import cv2
 import ntpath
 import tensorflow as tf
 import glob
+from PIL import Image
+
 
 # D:\Projects\ADM Assg 3\Assignment-3--Team-5\Part_1\streamlit_visual_search_artistic_style.py
 model = tf.keras.models.load_model("visual_search_similarity.keras")
@@ -39,7 +41,7 @@ def embedding_plot(X, images, thumbnail_sparsity = 0.005, thumbnail_size = 0.3):
 
     plt.grid(True)
 
-image_paths = glob.glob('D:/Projects/ADM Assg 3/Assignment-3--Team-5/Part_1/search/images-by-style/*.jpg')
+image_paths = glob.glob('C:/Users/shiri/Documents/Assg3ADM/Assignment-3--Team-5/Part_1/search/images-by-style/*.jpg')
 # print(f'Found [{len(image_paths)}] images')
 images = {}
 for image_path in image_paths:
@@ -51,13 +53,13 @@ for image_path in image_paths:
 
 tsne = manifold.TSNE(n_components=2, init='pca', perplexity=10, random_state=0)
 X_tsne = tsne.fit_transform( np.array(list(image_style_embeddings.values())) )
-embedding_plot(X_tsne, images=list(images.values()))
+# embedding_plot(X_tsne, images=list(images.values()))
 
-# Save the figure as an image
-plt.savefig('embedding_plot.png')
+# # Save the figure as an image
+# plt.savefig('embedding_plot.png')
 
-# Pass the saved image to the st.image() function
-st.image('embedding_plot.png')
+# # Pass the saved image to the st.image() function
+# st.image('embedding_plot.png')
 
 # Search in the Embedding Space
 def search_by_style(image_style_embeddings, images, reference_image, max_results=10):
@@ -78,19 +80,29 @@ def search_by_style(image_style_embeddings, images, reference_image, max_results
     
 
 # images mostly match the reference style, although not perfectly
-search_by_style(image_style_embeddings, images, 's_impressionist-02.jpg')
-plt.savefig('style_plot.png')
-st.image('style_plot.png')
+#image = Image.open('Part_1/Arn-Van-Gogh-Secondary-1.jpg')
+
+# search_by_style(image_style_embeddings, images, 's_impressionist-02.jpg')
+# plt.savefig('style_plot.png')
+# st.image('style_plot.png')
 # images mostly match the reference style, although not perfectly
-# uploaded_image = st.file_uploader("Upload an Image", type=['jpg', 'png', 'jpeg'])
-# st.write(uploaded_image)
+uploaded_image = st.file_uploader("Upload an Image", type=['jpg', 'png', 'jpeg'])
+st.write(uploaded_image)
 
-# if uploaded_image is not None:
-#     try:
-#       search_by_style(image_style_embeddings, images, uploaded_image)
-#       plt.savefig('search_by_style.png')
-#       st.image('search_by_style.png')
-#     except Exception as e:
-#       st.error(f'Failed to load or process the image: {str(e)}')
+if uploaded_image is not None:
+    try:
+        name = uploaded_image.name
+        search_by_style(image_style_embeddings, images, name)
+        plt.savefig('search_by_style.png')
+        st.image('search_by_style.png')
 
+        embedding_plot(X_tsne, images=list(images.values()))
 
+        # Save the figure as an image
+        plt.savefig('embedding_plot.png')
+
+        # Pass the saved image to the st.image() function
+        st.image('embedding_plot.png')
+
+    except Exception as e:
+      st.error(f'Failed to load or process the image: {str(e)}')
