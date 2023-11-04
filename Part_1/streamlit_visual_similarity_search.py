@@ -13,6 +13,7 @@ def decode_label_prob(y, classes):
     labels = [f'{c}: {p:.2%}' for c, p in zip(classes, y)]
     return labels
 
+
 st.title("Visual Similarity Finder")
 
 uploaded_image = st.file_uploader("Upload an Image", type=['jpg', 'png', 'jpeg'])
@@ -39,8 +40,13 @@ if uploaded_image is not None:
 
         # Decode the prediction results
         labels = decode_label_prob(class_probs, label_set)
-        st.header("The class probabilities for image")
+        st.header("The Class Probabilities for Image are:")
         st.write(labels, sep="\n")
+
+
+
+
+        
 
     except Exception as e:
         st.error(f'Failed to load or process the image: {str(e)}')
