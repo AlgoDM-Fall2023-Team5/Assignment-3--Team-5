@@ -16,7 +16,7 @@ st.header("Visual Search Aristic Style")
 # D:\Projects\ADM Assg 3\Assignment-3--Team-5\Part_1\streamlit_visual_search_artistic_style.py
 #model = tf.keras.models.load_model("Part_1/visual_search_artistic.keras")
 
-with open('image_style_embeddings.pickle', 'rb') as f:
+with open('Part_1/image_style_embeddings.pickle', 'rb') as f:
     image_style_embeddings = pickle.load(f)
 
 def load_image(image):
